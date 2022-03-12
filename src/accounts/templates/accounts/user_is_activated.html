@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    User is activated
+{% endblock %}
+
+{% block header %}
+    User is activated
+{% endblock %}
+
+{% block content %}
+    <p>User with this username has been activated before.</p>
+    <p><a class="btn btn-success" href="{% url 'accounts:login' %}">Login</a></p>
+{% endblock %}

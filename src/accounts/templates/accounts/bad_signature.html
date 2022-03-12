@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Activation failed
+{% endblock %}
+
+{% block header %}
+    Activation failed
+{% endblock %}
+
+{% block content %}
+    <p>Activation failed.</p>
+    <p><a class="btn btn-success" href="{% url 'accounts:register' %}">Register again.</a></p>
+{% endblock %}

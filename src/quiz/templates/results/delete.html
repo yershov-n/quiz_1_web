@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Delete test
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <p>Do you really remove</p>
+    <input class="btn btn-outline-danger" type="submit" value="Agree">
+    <a class="btn btn-outline-primary" href="{% url 'quizzes:details' result.exam.uuid %}">Cancel</a>
+  </form>
+{% endblock %}
