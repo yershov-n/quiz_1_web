@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from os import getenv
 
+from celery.schedules import crontab
+from core.tasks import simple_task
+from core.tasks import send_email_report
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +50,7 @@ INSTALLED_APPS = [
 
     'accounts.apps.AccountsConfig',
     'quiz.apps.QuizConfig',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -158,3 +163,32 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # EMAIL_PORT = 1025
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@test.com"
+ADMINS = [("testuser", "test_admin@test.com"), ]
+
+CELERY_BROKER_URL = getenv("CELERY_BROKER")
+# CELERY_RESULT_BACKEND = getenv("CELERY_BACKEND")
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "core.tasks.simple_task",
+        "schedule": crontab(minute="*/1"),
+    },
+    "send_email_report": {
+        "task": "core.tasks.send_email_report",
+        "schedule": crontab(minute="*/1"),
+    },
+}
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://redis:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
+#         },
+#         "KEY_PREFIX": "example"
+#     }
+# }
