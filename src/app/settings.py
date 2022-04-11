@@ -180,6 +180,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "core.tasks.send_email_report",
         "schedule": crontab(minute="*/1"),
     },
+    "send_welcome_email": {
+        "task": "core.tasks.send_welcome_email",
+        "schedule": crontab(hour="*/24"),
+    }
 }
 
 # CACHES = {
